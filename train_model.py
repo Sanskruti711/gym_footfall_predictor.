@@ -9,6 +9,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
+from preprocessing import preprocess_df, FEATURE_COLS, TARGET_COL
+
 import joblib
 
 DB_PATH = "project.db"
@@ -21,7 +23,11 @@ def load_data():
     return df
 
 def train_and_evaluate():
-    df = load_data()
+    df_raw = load_data()
+    df = preprocess_df(df_raw)
+    X = df[FEATURE_COLS]
+    y = df[TARGET_COL]
+
 
     feature_cols = [
         "hour",
