@@ -10,6 +10,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from preprocessing import preprocess_df, FEATURE_COLS, TARGET_COL
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 
 import joblib
 
@@ -21,6 +23,11 @@ def load_data():
     df = pd.read_sql(f"SELECT * FROM {TABLE_NAME}", conn)
     conn.close()
     return df
+
+def mape(y_true, y_pred):
+    y_true, y_pred = np.array(y_true), np.array(y_pred)
+    eps = 1e-5
+    return float(np.mean(np.abs((y_true - y_pred) / (y_true + eps))) * 100.0)
 
 def train_and_evaluate():
     df_raw = load_data()
