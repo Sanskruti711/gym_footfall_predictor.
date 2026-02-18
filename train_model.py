@@ -57,33 +57,40 @@ def train_and_evaluate():
         X, y, test_size=0.2, random_state=42
     )
 
-    # 1) Linear Regression
-    lin_reg = LinearRegression()
-    lin_reg.fit(X_train, y_train)
-    y_pred_lr = lin_reg.predict(X_test)
-    rmse_lr = mean_squared_error(y_test, y_pred_lr) ** 0.5
+models = {
+    "LinearRegression": LinearRegression(),
+    "DecisionTreeRegressor": DecisionTreeRegressor(max_depth=5, random_state=42),
+    "RandomForestRegressor": RandomForestRegressor(n_estimators=100, random_state=42),
+}
 
-    # 2) Random Forest
-    rf = RandomForestRegressor(
-        n_estimators=100,
-        random_state=42
-    )
-    rf.fit(X_train, y_train)
-    y_pred_rf = rf.predict(X_test)
-    rmse_rf = mean_squared_error(y_test, y_pred_rf) **0.5
+results = []
 
-    print(f"LinearRegression RMSE: {rmse_lr:.2f}")
-    print(f"RandomForestRegressor RMSE: {rmse_rf:.2f}")
+for name, mdl in models.items():
+    mdl.fit(X_train, y_train)
+    y_pred = mdl.predict(X_test)
 
-    # choose best
-    if rmse_rf <= rmse_lr:
-        best_model = rf
-        best_name = "RandomForestRegressor"
-        best_rmse = rmse_rf
-    else:
-        best_model = lin_reg
-        best_name = "LinearRegression"
-        best_rmse = rmse_lr
+    rmse = mean_squared_error(y_test, y_pred, squared=False)
+    mae = mean_absolute_error(y_test, y_pred)
+    mape_val = mape(y_test, y_pred)
+
+    results.append({
+        "name": name,
+        "model": mdl,
+        "rmse": rmse,
+        "mae": mae,
+        "mape": mape_val,
+    })
+
+    print(f"{name} -> RMSE: {rmse:.2f}, MAE: {mae:.2f}, MAPE: {mape_val:.1f}%")
+
+# choose best by RMSE (you can also use MAPE)
+best = min(results, key=lambda r: r["rmse"])
+best_model = best["model"]
+best_name = best["name"]
+best_rmse = best["rmse"]
+best_mae = best["mae"]
+best_mape = best["mape"]
+
 
     # save model
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
