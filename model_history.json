@@ -1,0 +1,6 @@
+{"model_name": "RandomForestRegressor", "rmse": 9.555870366983228, "timestamp": "20260218_163542", "model_path": "models/model_20260218_163542.pkl"}
+{"model_name": "RandomForestRegressor", "rmse": 9.555870366983228, "timestamp": "20260218_163605", "model_path": "models/model_20260218_163605.pkl"}
+{"model_name": "RandomForestRegressor", "rmse": 9.555870366983228, "timestamp": "20260218_163804", "model_path": "models/model_20260218_163804.pkl"}
+{"model_name": "RandomForestRegressor", "rmse": 9.555870366983228, "timestamp": "20260218_163839", "model_path": "models/model_20260218_163839.pkl"}
+{"model_name": "RandomForestRegressor", "rmse": 9.555870366983228, "timestamp": "20260218_164006", "model_path": "models/model_20260218_164006.pkl"}
+{"model_name": "RandomForestRegressor", "rmse": 9.555870366983228, "mae": 7.674166666666661, "mape": 4140396.755219934, "timestamp": "20260222_183353", "model_path": "models/model_20260222_183353.pkl"}
